@@ -1,38 +1,50 @@
-# Prompting para Word by Word
+# React + TypeScript + Vite
 
-## Word by Word
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**Descripción**:
+Currently, two official plugins are available:
 
-Word by Word es una extensión de Chrome que utiliza inteligencia artificial (IA) para ayudar a los hispanohablantes a aprender inglés de manera más efectiva y personalizada. La extensión se integra directamente en la experiencia de navegación, proporcionando traducciones contextualizadas, sugerencias de vocabulario y gramática, y ejercicios interactivos para mejorar la comprensión lectora y la expresión escrita en inglés.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-[Documentación del proyecto](https://docs.google.com/document/d/1pXNdcvhJm1MVZRguxPh5G0RVd9XwlJE5H5nHB3aNAoc/edit?usp=sharing)
+## Expanding the ESLint configuration
 
-## Descripción del Código
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-Este código en Python, ejecutado en Google Colab, establece el entorno para experimentar con modelos de lenguaje de IA, específicamente Gemini. Se instala la biblioteca google-generativeai y se configura la clave API necesaria.
+- Configure the top-level `parserOptions` property like this:
 
-Luego, se definen dos prompts principales:
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-- Traducción contextual: El modelo actúa como un traductor inglés-español, proporcionando traducciones precisas en contexto y ejemplos de uso en situaciones cotidianas.
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-- Chat de práctica: El modelo simula una conversación en inglés con un hablante de español, corrigiendo errores gramaticales y fomentando la práctica del idioma.
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-La configuración del modelo incluye parámetros como temperature para controlar la creatividad de las respuestas. El código también implementa un bucle interactivo para mantener conversaciones continuas con el modelo en el segundo caso de uso.
-
-**Importancia de los Prompts**
-
-Los prompts son esenciales en este proyecto, ya que guían el comportamiento del modelo de IA. Al experimentar y refinar estos prompts, buscamos:
-
-- Optimizar la traducción contextual: Lograr traducciones más precisas y relevantes al proporcionar contexto y ejemplos al modelo.
-- Crear un entorno de práctica efectivo: Simular conversaciones realistas en inglés, ofreciendo correcciones gramaticales y fomentando la interacción en el idioma.
-
-## Futuro del Proyecto
-
-La idea es seguirexplorando y probando técnicas de prompting más avanzadas para enriquecer la experiencia de aprendizaje. Algunas áreas de exploración incluyen:
-
-- Conexión con base de datos de vocabulario: Integrar una base de datos que registre las palabras que el usuario conoce y desconoce, permitiendo una personalización aún más profunda de las traducciones, sugerencias y ejercicios.
-
-- Modelos de IA más sofisticados: Investigar y aplicar modelos de lenguaje más avanzados para mejorar la precisión, la fluidez y la naturalidad de las traducciones y sugerencias.
-
-- Nuevas funcionalidades basadas en IA: Explorar la posibilidad de añadir funciones como la generación de resúmenes de texto, la traducción de páginas web completas o la creación de cuestionarios interactivos, todo impulsado por IA y guiado por prompts efectivos.
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
