@@ -7,7 +7,11 @@ export default function App() {
       text: "What are you interested in talking about? ",
     },
   ]);
-  const [history, setHistory] = useState([]);
+
+  const [history, setHistory] = useState<
+    { role: string; parts: { text: string }[] }[]
+  >([]);
+
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -44,12 +48,15 @@ export default function App() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (e.target[0].value === "") return;
+    const form = e.target as HTMLFormElement;
+    const input = form.elements[0] as HTMLInputElement;
+
+    if (input.value === "") return;
 
     setLoading(true);
     const userMessage = {
       role: "user",
-      text: e.target[0].value,
+      text: input.value,
     };
     setMessages([...messages, userMessage]);
 
@@ -86,7 +93,7 @@ export default function App() {
         setLoading(false);
       });
 
-    e.target[0].value = "";
+    input.value = "";
   };
 
   return (
