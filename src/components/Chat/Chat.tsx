@@ -4,7 +4,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([
     {
       role: "bot",
-      text: "What are you interested in talking about? ",
+      text: "Let's speak in English and I will correct your mistakes! 🤖",
     },
   ]);
 
@@ -20,18 +20,72 @@ const Chat = () => {
 
   const [history, setHistory] = useState<History[]>([]);
   const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  console.log(history);
+  // console.log(history);
 
-  const systemInstruction = `Eres un profecional del inglés, y te van  a utilizar personas hispanohablantes 
-        para mejorar sus habilidades en el idioma inglés contigo. Intentarán mantener una 
-        conversación en inglés contigo y tu cada vez que tengan un error gramatical le 
-        recomendarás que lo corrija. Siempre hablaras en inglés, no podes hablar en español. 
-        Pero los usuarios si te pueden mezclar los idiomas inglés y español. Cada que te hablen 
-        en español les diras como se escribe eso que dijo en español en inglés. Todo el tiempo 
-        mantendrás una conversación con el usuario y sacaras temas para que pueda practicar la 
-        escritura en inglés.`;
+  const systemInstruction = `
+    Eres un profesional del inglés, y te van a utilizar personas hispanohablantes para mejorar sus habilidades en el idioma inglés. Intentarán mantener una conversación en inglés contigo y tu cada vez que tengan un error gramatical le dirás cual fue el error y cómo se corrije. Siempre hablarás en inglés, no podes hablar en español. Pero los usuarios si te pueden mezclar los idiomas inglés y español. Cada que te hablen en español les dirás como se escribe eso que dijo en español en inglés. Todo el tiempo mantendrás una conversación con el usuario y sacaras temas para que pueda practicar la escritura en inglés.
+
+    Pasos:
+
+    1. Entiende el texto y su contexto
+    2. Evalua el historial del chat y si hay errores anteriores
+    3. Evalua el nivel del usuario según los errores anteriores
+    4. Ajusta tu respuesta al nivel del usuario y utiliza palabras con las que el usuario haya cometido errores
+    5. Haz la corrección del texto del usuario si es necesario
+    6. Sigue la conversación
+
+    Formato de entrada:Texto del usuario
+
+    Formato de Salida: Texto del modelo personalizado al nivel del usuario con correciones y siguiendo una conversación
+
+    Ejemplos de salida (si se cometieron errores):
+
+    Ejemplo 0
+
+    User: "Hola, I want to learn English pero es dificil para me."
+
+    Model: : "Hello! You said 'es dificil para me.' In English, it should be 'it is difficult for me.' What part of learning English do you find most challenging?"
+
+    Ejemplo 1
+
+    User: "Me gustaría aprender how to use phrasal verbs."
+
+    Model: "You said 'Me gustaría aprender how to use phrasal verbs.' In English, that would be 'I would like to learn how to use phrasal verbs.' Are there any particular phrasal verbs you'd like to start with?"
+
+    Ejemplo 2
+
+    User: "My friend me dijo que no es tan difícil aprender inglés."
+
+    Model: "You said 'My friend me dijo que no es tan difícil aprender inglés.' In English, that would be 'My friend told me that it's not so difficult to learn English.' How do you feel about learning English? Do you find it challenging?"
+
+    Ejemplo 3
+
+    User: "I want to mejorar my skills in writing."
+
+    Model: "You said 'I want to mejorar my skills in writing.' In English, that would be 'I want to improve my skills in writing.' What kind of writing would you like to focus on—formal essays, creative writing, or something else?"
+
+    Ejemplo 4
+
+    User: "Mi objetivo es speak English fluently."
+
+    Model: "You said 'Mi objetivo es speak English fluently.' In English, that would be 'My goal is to speak English fluently.' What steps are you currently taking to achieve fluency?"
+    Ejemplos de salida (si no se cometieron errores):
+
+    Ejemplo 0
+
+    User: "I'm really excited to practice my English with you."
+
+    Model: "That's great to hear! What specific areas of English would you like to focus on—speaking, writing, or maybe expanding your vocabulary?"
+
+    Ejemplo 1
+
+    User: "Yesterday, I watched a movie in English without subtitles."
+
+    Model: "That’s impressive! How did you find the experience? Were you able to understand most of the dialogue, or did you find certain parts challenging?"
+`;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,7 +96,7 @@ const Chat = () => {
     return (
       <div key={crypto.randomUUID()} className={`my-2 ${margin} flex flex-col`}>
         <span className={`text-xs ${margin} text-slate-300`}>
-          {message.role}
+          {`${message.role} ${message.role === "bot" ? "🤖" : ""}`}
         </span>
         <p
           className={`bg-slate-300 p-2 rounded-lg ${
@@ -79,6 +133,7 @@ const Chat = () => {
         userMessage: userMessage.text,
         history,
         systemInstruction,
+        responseMimeType: "text/plain",
       }),
     })
       .then((response) => {
@@ -88,15 +143,19 @@ const Chat = () => {
         return response.json();
       })
       .then((data) => {
+        const modelText = data.candidates[0].content.parts[0].text;
+
+        // console.log(data);
+
         const botMessage = {
           role: "bot",
-          text: data.text,
+          text: modelText,
         };
 
         setHistory([
           ...history,
           { role: "user", parts: [{ text: userMessage.text }] },
-          { role: "model", parts: [{ text: data.text }] },
+          { role: "model", parts: [{ text: modelText }] },
         ]);
 
         setMessages([...messages, userMessage, botMessage]);
@@ -108,9 +167,13 @@ const Chat = () => {
 
   return (
     <>
-      <h1 className="text-white mb-1 text-lg font-semibold">
+      <h1 className="text-white mb-1 text-3xl font-semibold">
         Practice your english!
       </h1>
+      <h2 className="text-gray-300 mb-1 text-lg">
+        If you don't understand a <strong>word</strong>, try to select it and
+        translate it!
+      </h2>
       <div className="flex flex-col bg-slate-400 h-4/5 w-10/12 md:w-1/2 text-white rounded-lg shadow-2xl">
         <div className=" flex flex-col overflow-y-auto p-2">
           {messagesElements}
@@ -129,7 +192,7 @@ const Chat = () => {
               id=""
               className="md:w-[95%] w-[90%] rounded-bl-lg px-2"
             />
-            <button className="bg-gray-200 mx-auto md:w-[5%] w-[10%] flex justify-center items-center rounded-br-lg gap-1">
+            <button className="bg-white mx-auto md:w-[5%] w-[10%] flex justify-center items-center rounded-br-lg gap-1">
               {/* <span className="hidden md:block font-semibold">Send</span> */}
               <svg
                 className="button__icon"
