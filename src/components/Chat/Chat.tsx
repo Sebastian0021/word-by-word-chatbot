@@ -163,6 +163,7 @@ const Chat = () => {
       });
 
     input.value = "";
+    input.blur();
   };
 
   return (
