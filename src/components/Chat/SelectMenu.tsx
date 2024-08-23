@@ -27,7 +27,7 @@ const SelectMenu = () => {
 
     setPosition({
       x: rect.left + rect.width / 2 - 80 / 2,
-      y: rect.top + window.scrollY - 30,
+      y: rect.top + window.scrollY + 30,
       width: rect.width,
       height: rect.height,
     });
@@ -44,7 +44,7 @@ const SelectMenu = () => {
 
     setPosition({
       x: rect.left + rect.width / 2 - 400 / 2,
-      y: rect.top + window.scrollY - 150,
+      y: rect.top + window.scrollY + 30,
       width: rect.width,
       height: rect.height,
     });
@@ -123,7 +123,7 @@ const SelectMenu = () => {
             absolute -top-2 left-0 ${
               show ? "w-[400px] h-[150px]" : "w-[80px] h-[30px]"
             } bg-slate-800 text-white rounded m-0
-            after:absolute after:top-full after:left-1/2 after:-translate-x-2 after:h-0 after:w-0 after:border-x-[6px] after:border-x-transparent after:border-b-[8px] after:border-b-black after:rotate-180
+            before:absolute before:bottom-full before:left-1/2 before:-translate-x-2 before:h-0 before:w-0 before:border-x-[6px] before:border-x-transparent before:border-b-[8px] before:border-b-black
           `}
           style={{
             transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
