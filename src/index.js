@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const corsHeaders = {
-	'Access-Control-Allow-Origin': '*', //CAMBIAR POR EL DOMINIO DE LA APLICACIÓN
+	'Access-Control-Allow-Origin': 'https://prompting-dy5.pages.dev', //CAMBIAR POR EL DOMINIO DE LA APLICACIÓN
 	'Access-Control-Allow-Methods': 'POST, OPTIONS',
 	'Access-Control-Allow-Headers': 'Content-Type',
 };
