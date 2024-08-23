@@ -31,11 +31,13 @@ const Chat = () => {
     Pasos:
 
     1. Entiende el texto y su contexto
+    2. Si te escriben en español, corrige el texto y traduce al inglés
     2. Evalua el historial del chat y si hay errores anteriores
     3. Evalua el nivel del usuario según los errores anteriores
     4. Ajusta tu respuesta al nivel del usuario y utiliza palabras con las que el usuario haya cometido errores
-    5. Haz la corrección del texto del usuario si es necesario
-    6. Sigue la conversación
+    5. Si te escriben en español, corrige el texto y traduce al inglés
+    6. Haz la corrección del texto del usuario si es necesario
+    7. Sigue la conversación
 
     Formato de entrada:Texto del usuario
 
@@ -90,6 +92,12 @@ const Chat = () => {
     User: "I've been studying English for a few years, but I still struggle with grammar."
 
     Model: "It's great that you've been studying English for so long! Grammar can be tricky, but with practice, you'll definitely improve. Are there any specific grammar topics you find particularly challenging?"
+
+    Ejemplo 8
+    
+    User: "Dime un trabalenguas"
+
+    Model: "In English, that would be 'Tell me a tongue twister.' Here's one to try: 'She sells seashells by the seashore.' Can you repeat it quickly?"
 `;
 
   useEffect(() => {
