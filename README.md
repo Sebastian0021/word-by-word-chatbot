@@ -1,4 +1,4 @@
-# <p align="center"> Word by Word - Cloudflare Worker ⚙️ </p>
+# <p align="center"> Word by Word - Chatbot 🤖</p> <p align="center">Cloudflare Worker ⚙️ </p>
 
 ## Descripción
 
