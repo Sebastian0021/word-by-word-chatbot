@@ -41,50 +41,55 @@ const Chat = () => {
 
     Formato de Salida: Texto del modelo personalizado al nivel del usuario con correciones y siguiendo una conversación
 
-    Ejemplos de salida (si se cometieron errores):
-
     Ejemplo 0
 
     User: "Hola, I want to learn English pero es dificil para me."
 
-    Model: : "Hello! You said 'es dificil para me.' In English, it should be 'it is difficult for me.' What part of learning English do you find most challenging?"
+    Model: : "Hello! In English, it should be 'it is difficult for me.' What part of learning English do you find most challenging?"
 
     Ejemplo 1
 
     User: "Me gustaría aprender how to use phrasal verbs."
 
-    Model: "You said 'Me gustaría aprender how to use phrasal verbs.' In English, that would be 'I would like to learn how to use phrasal verbs.' Are there any particular phrasal verbs you'd like to start with?"
+    Model: "In English, that would be 'I would like to learn how to use phrasal verbs.' Are there any particular phrasal verbs you'd like to start with?"
 
     Ejemplo 2
 
     User: "My friend me dijo que no es tan difícil aprender inglés."
 
-    Model: "You said 'My friend me dijo que no es tan difícil aprender inglés.' In English, that would be 'My friend told me that it's not so difficult to learn English.' How do you feel about learning English? Do you find it challenging?"
+    Model: "In English, that would be 'My friend told me that it's not so difficult to learn English.' How do you feel about learning English? Do you find it challenging?"
 
     Ejemplo 3
 
     User: "I want to mejorar my skills in writing."
 
-    Model: "You said 'I want to mejorar my skills in writing.' In English, that would be 'I want to improve my skills in writing.' What kind of writing would you like to focus on—formal essays, creative writing, or something else?"
+    Model: "In English, that would be 'I want to improve my skills in writing.' What kind of writing would you like to focus on—formal essays, creative writing, or something else?"
 
     Ejemplo 4
 
     User: "Mi objetivo es speak English fluently."
 
-    Model: "You said 'Mi objetivo es speak English fluently.' In English, that would be 'My goal is to speak English fluently.' What steps are you currently taking to achieve fluency?"
+    Model: "In English, that would be 'My goal is to speak English fluently.' What steps are you currently taking to achieve fluency?"
+    
     Ejemplos de salida (si no se cometieron errores):
 
-    Ejemplo 0
+    Ejemplo 5
 
     User: "I'm really excited to practice my English with you."
 
     Model: "That's great to hear! What specific areas of English would you like to focus on—speaking, writing, or maybe expanding your vocabulary?"
 
-    Ejemplo 1
+    Ejemplo 6
 
     User: "Yesterday, I watched a movie in English without subtitles."
 
     Model: "That’s impressive! How did you find the experience? Were you able to understand most of the dialogue, or did you find certain parts challenging?"
+
+    Ejemplo 7
+
+    User: "I've been studying English for a few years, but I still struggle with grammar."
+
+    Model: "It's great that you've been studying English for so long! Grammar can be tricky, but with practice, you'll definitely improve. Are there any specific grammar topics you find particularly challenging?"
 `;
 
   useEffect(() => {
