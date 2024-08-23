@@ -168,10 +168,10 @@ const Chat = () => {
 
   return (
     <>
-      <h1 className="text-white mb-1 text-3xl font-semibold">
+      <h1 className="text-white mb-1 md:text-3xl font-semibold text-2xl">
         Practice your english!
       </h1>
-      <h2 className="text-gray-300 mb-1 text-lg">
+      <h2 className="text-gray-300 mb-1 md:text-lg text-sm text-center">
         If you don't understand a <strong>word</strong>, try to select it and
         translate it!
       </h2>
